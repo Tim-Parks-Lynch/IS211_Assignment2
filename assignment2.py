@@ -1,15 +1,28 @@
 import argparse
-import urllib.request
+import requests
+import csv
 import logging
 import datetime
 
 def downloadData(url):
     """Downloads the data"""
-    pass
+    response = requests.get(url)
+    return response.text
 
 def processData(file_content):
-    pass
+    user_data = {}
+    row = file_content.split("\n")
 
+    try:
+        for line in row[1:]:
+            id, name, birthday = line.split(",")
+            user_data[id] = (name, birthday)
+    except:
+        user_data[id] = "Dang something went wrong"
+    
+    print(user_data)
+    print("-----------")
+    print(user_data['16'])
 
 def displayPerson(id, personData):
     pass
@@ -24,3 +37,6 @@ if __name__ == "__main__":
     parser.add_argument("--url", help="URL to the datafile", type=str, required=True)
     args = parser.parse_args()
     main(args.url)
+    url = args.url
+    response = downloadData(url)
+    processData(response)
