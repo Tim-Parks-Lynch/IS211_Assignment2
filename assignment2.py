@@ -9,19 +9,15 @@ def logger_creator(logger_name, output_file, message):
     logger = logging.getLogger(logger_name)
 
     # Create handler
-    # stream_handler = logging.StreamHandler() # outputs to console
     file_handler = logging.FileHandler(output_file)
 
     # Set level
-    # stream_handler.setLevel(logging.ERROR)
     file_handler.setLevel(logging.ERROR)
 
     # Checks if handlers already exist, if so clears them
-    # Christ on a cracker, remember this for the future, stops multiples of the same error being logged
     if logger.hasHandlers():
         logger.handlers.clear()
 
-    # logger.addHandler(stream_handler)
     logger.addHandler(file_handler)
 
     logger.error(message)
